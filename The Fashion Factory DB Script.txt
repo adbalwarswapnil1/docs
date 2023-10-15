@@ -1,0 +1,221 @@
+USE [TheFashionFactory]
+GO
+/****** Object:  Table [dbo].[cart_item]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cart_item](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[product_id] [int] NOT NULL,
+	[quantity] [int] NOT NULL,
+ CONSTRAINT [PK_cart_item] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[discount]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[discount](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[discount_percentage] [decimal](18, 0) NOT NULL,
+ CONSTRAINT [PK_discount] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[favorite_products]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[favorite_products](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[product_id] [int] NOT NULL,
+	[favorite] [bit] NOT NULL,
+ CONSTRAINT [PK_favorite_products] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[order_details]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[order_details](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[total] [decimal](18, 0) NOT NULL,
+	[payment_id] [int] NOT NULL,
+ CONSTRAINT [PK_order_details] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[order_items]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[order_items](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[order_id] [int] NOT NULL,
+	[product_id] [int] NOT NULL,
+	[quantity] [int] NOT NULL,
+ CONSTRAINT [PK_order_items] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[payment_details]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[payment_details](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[amount] [decimal](18, 0) NOT NULL,
+	[status] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_payment_details] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[brand_name] [varchar](50) NOT NULL,
+	[description] [varchar](100) NOT NULL,
+	[quantity] [int] NOT NULL,
+	[price] [decimal](18, 0) NOT NULL,
+	[category_id] [int] NOT NULL,
+	[discount_id] [int] NOT NULL,
+	[image_url] [varchar](max) NOT NULL,
+ CONSTRAINT [PK_product] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[product_category]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[product_category](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[description] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_product_category] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[username] [varchar](50) NOT NULL,
+	[password] [text] NOT NULL,
+	[first_name] [varchar](50) NOT NULL,
+	[last_name] [varchar](50) NOT NULL,
+	[phone] [bigint] NOT NULL,
+	[address] [varchar](100) NOT NULL,
+ CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_payment]    Script Date: 8/6/2023 11:28:05 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_payment](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[user_id] [int] NOT NULL,
+	[payment_type] [varchar](50) NOT NULL,
+	[account_no] [bigint] NOT NULL,
+	[expiry] [date] NOT NULL,
+ CONSTRAINT [PK_user_payment] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[cart_item]  WITH CHECK ADD  CONSTRAINT [FK_cart_item_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[cart_item] CHECK CONSTRAINT [FK_cart_item_product]
+GO
+ALTER TABLE [dbo].[cart_item]  WITH CHECK ADD  CONSTRAINT [FK_cart_item_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[user] ([id])
+GO
+ALTER TABLE [dbo].[cart_item] CHECK CONSTRAINT [FK_cart_item_user]
+GO
+ALTER TABLE [dbo].[favorite_products]  WITH CHECK ADD  CONSTRAINT [FK_favorite_products_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[favorite_products] CHECK CONSTRAINT [FK_favorite_products_product]
+GO
+ALTER TABLE [dbo].[favorite_products]  WITH CHECK ADD  CONSTRAINT [FK_favorite_products_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[user] ([id])
+GO
+ALTER TABLE [dbo].[favorite_products] CHECK CONSTRAINT [FK_favorite_products_user]
+GO
+ALTER TABLE [dbo].[order_details]  WITH CHECK ADD  CONSTRAINT [FK_order_details_payment_details] FOREIGN KEY([payment_id])
+REFERENCES [dbo].[payment_details] ([id])
+GO
+ALTER TABLE [dbo].[order_details] CHECK CONSTRAINT [FK_order_details_payment_details]
+GO
+ALTER TABLE [dbo].[order_details]  WITH CHECK ADD  CONSTRAINT [FK_order_details_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[user] ([id])
+GO
+ALTER TABLE [dbo].[order_details] CHECK CONSTRAINT [FK_order_details_user]
+GO
+ALTER TABLE [dbo].[order_items]  WITH CHECK ADD  CONSTRAINT [FK_order_items_order_details] FOREIGN KEY([order_id])
+REFERENCES [dbo].[order_details] ([id])
+GO
+ALTER TABLE [dbo].[order_items] CHECK CONSTRAINT [FK_order_items_order_details]
+GO
+ALTER TABLE [dbo].[order_items]  WITH CHECK ADD  CONSTRAINT [FK_order_items_product] FOREIGN KEY([product_id])
+REFERENCES [dbo].[product] ([id])
+GO
+ALTER TABLE [dbo].[order_items] CHECK CONSTRAINT [FK_order_items_product]
+GO
+ALTER TABLE [dbo].[product]  WITH CHECK ADD  CONSTRAINT [FK_product_discount] FOREIGN KEY([discount_id])
+REFERENCES [dbo].[discount] ([id])
+GO
+ALTER TABLE [dbo].[product] CHECK CONSTRAINT [FK_product_discount]
+GO
+ALTER TABLE [dbo].[product]  WITH CHECK ADD  CONSTRAINT [FK_product_product_category] FOREIGN KEY([category_id])
+REFERENCES [dbo].[product_category] ([id])
+GO
+ALTER TABLE [dbo].[product] CHECK CONSTRAINT [FK_product_product_category]
+GO
+ALTER TABLE [dbo].[user_payment]  WITH CHECK ADD  CONSTRAINT [FK_user_payment_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[user] ([id])
+GO
+ALTER TABLE [dbo].[user_payment] CHECK CONSTRAINT [FK_user_payment_user]
+GO
